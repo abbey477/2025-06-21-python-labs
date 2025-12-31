@@ -1,0 +1,79 @@
+
+
+====================================================================
+#!/bin/bash
+
+# Simple Python virtual environment setup
+# Usage: ./setup_env.sh <project_name> <directory>
+# Example: ./setup_env.sh my-project ~/projects
+
+PROJECT_NAME=${1:-spark-project}
+BASE_DIR=${2:-$HOME}
+PROJECT_DIR="$BASE_DIR/$PROJECT_NAME"
+
+echo "Setting up: $PROJECT_DIR"
+
+# Install packages
+sudo apt install python3-pip python3-venv python3-dev build-essential -y
+
+# Create project directory
+mkdir -p "$PROJECT_DIR"
+cd "$PROJECT_DIR"
+
+# Create and activate virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Upgrade pip and install PySpark
+python3 -m pip install --upgrade pip
+python3 -m pip install pyspark
+
+# Save requirements
+python3 -m pip freeze > requirements.txt
+
+echo "Done! Activate with: source $PROJECT_DIR/venv/bin/activate"
+
+==================================================================================
+
+#!/bin/bash
+
+# Simple Python virtual environment setup for Ubuntu 24.04
+# Usage: ./setup_env.sh <project_name> <directory>
+# Example: ./setup_env.sh my-project ~/projects
+
+PROJECT_NAME=${1:-spark-project}
+BASE_DIR=${2:-$HOME}
+PROJECT_DIR="$BASE_DIR/$PROJECT_NAME"
+
+echo "Setting up: $PROJECT_DIR"
+
+# Install packages (Ubuntu 24.04)
+sudo apt update
+sudo apt install python3-pip python3-venv python3-dev build-essential -y
+
+# Create project directory
+mkdir -p "$PROJECT_DIR"
+cd "$PROJECT_DIR"
+
+# Create virtual environment
+python3 -m venv venv
+
+# Activate virtual environment FIRST
+source venv/bin/activate
+
+# Now pip commands will work inside the virtual environment
+pip install --upgrade pip
+pip install pyspark jupyter pandas numpy
+
+# Save requirements
+pip freeze > requirements.txt
+
+# Deactivate
+deactivate
+
+echo ""
+echo "========================================="
+echo "Setup Complete!"
+echo "Project: $PROJECT_DIR"
+echo "Activate: source $PROJECT_DIR/venv/bin/activate"
+echo "========================================="
