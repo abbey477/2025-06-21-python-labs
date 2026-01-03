@@ -1,0 +1,27 @@
+# Filter out built-ins and private variables
+my_functions = [name for name in dir() if not name.startswith('_') and callable(globals()[name])]
+print(my_functions)
+
+
+# Get all names in current namespace
+all_names = dir()
+
+# Create empty list to store function names
+my_functions = []
+
+# Loop through each name
+for name in all_names:
+    
+    # Skip private/hidden variables (those starting with '_')
+    if name.startswith('_'):
+        continue
+    
+    # Get the actual object from global scope
+    obj = globals()[name]
+    
+    # Check if it's callable (a function)
+    if callable(obj):
+        my_functions.append(name)
+
+# Print the list
+print(my_functions)
